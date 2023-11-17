@@ -1,18 +1,13 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { router } from "expo-router";
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Container } from '../components/container/Container';
 import AppClose from '../functions/AppClose';
-import { createTable } from '../services/dbActions';
 import * as S from './styles';
 
 
 const HomeScreen = () => {
-
-    useEffect(() => {
-        createTable();
-    }, []);
-
+    
     return (
         <Container>
             <S.CardButton

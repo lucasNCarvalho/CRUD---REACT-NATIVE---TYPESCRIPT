@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, Text, View, SafeAreaView, StyleSheet } from 'react-native';
-import { DatabaseConnection } from '../../database/database-connection';
 import { UserProps } from '../../@types/UserProps';
 import { Container } from '../../components/container/Container';
 import * as S from './styles';
