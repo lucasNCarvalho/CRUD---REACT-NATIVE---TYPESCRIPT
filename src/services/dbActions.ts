@@ -8,7 +8,7 @@ const db = DatabaseConnection.getConnection();
 const createTable = (): void => {
     db.transaction(function (txn) {
         txn.executeSql(
-            "CREATE TABLE IF NOT EXISTS table_user(user_id INTEGER PRIMARY KEY, user_name VARCHAR(20), user_date VARCHAR(20), user_email VARCHAR(30))",
+            "CREATE TABLE IF NOT EXISTS table_user(user_cpf INTEGER PRIMARY KEY, user_name VARCHAR(20), user_date VARCHAR(20), user_email VARCHAR(30))",
             []
         );
     });
@@ -18,7 +18,7 @@ const getUser = (inputUserId: string): Promise<UserProps> => {
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
-                "SELECT * FROM table_user where user_id = ?",
+                "SELECT * FROM table_user where user_cpf = ?",
                 [inputUserId],
                 (tx, results) => {
                     let len = results.rows.length;
@@ -60,7 +60,7 @@ const registerUser = (
 ) => {
         db.transaction(function (tx) {
             tx.executeSql(
-                "SELECT * FROM table_user where user_id = ?",
+                "SELECT * FROM table_user where user_cpf = ?",
                 [userId],
                 (tx, results) => {
                     let len = results.rows.length;
@@ -68,7 +68,7 @@ const registerUser = (
                         alert("Esse usuário já existe!");
                     } else {
                         tx.executeSql(
-                            "INSERT INTO table_user (user_id, user_name, user_date, user_email) VALUES (?,?,?,?)",
+                            "INSERT INTO table_user (user_cpf, user_name, user_date, user_email) VALUES (?,?,?,?)",
                             [userId, userName, userDate, userEmail],
                             (tx, results) => {
                                 if (results.rowsAffected > 0) {
@@ -102,7 +102,7 @@ const updateUser = (
 ) => {
         db.transaction((tx) => {
             tx.executeSql(
-                "UPDATE table_user set user_name=?, user_date=? , user_email=? where user_id=?",
+                "UPDATE table_user set user_name=?, user_date=? , user_email=? where user_cpf=?",
                 [userName, userDate, userEmail, userId],
                 (tx, results) => {
                     console.log("Results", results.rowsAffected);
@@ -136,7 +136,7 @@ const delUser = (inputUserId: string): void => {
             onPress: () => {
                 db.transaction((tx) => {
                     tx.executeSql(
-                        "DELETE FROM  table_user where user_id=?",
+                        "DELETE FROM  table_user where user_cpf=?",
                         [inputUserId],
                         (tx, results) => {
                             if (results.rowsAffected > 0) {
@@ -149,7 +149,7 @@ const delUser = (inputUserId: string): void => {
                                             onPress: () => router.back(),
                                         },
                                     ],
-                                    { cancelable: false }
+                                    { cancelable: false } 
                                 );
                             }
                         }

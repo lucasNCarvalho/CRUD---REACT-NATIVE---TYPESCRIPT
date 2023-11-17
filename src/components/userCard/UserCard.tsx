@@ -10,7 +10,7 @@ const UserCard = (user: UserProps) => {
   return (
     <S.Container>
       <S.Textheader>Id</S.Textheader>
-      <S.Textbottom>{user.user_id}</S.Textbottom>
+      <S.Textbottom>{user.user_cpf}</S.Textbottom>
 
       <S.Textheader>Nome</S.Textheader>
       <S.Textbottom>{user.user_name}</S.Textbottom>

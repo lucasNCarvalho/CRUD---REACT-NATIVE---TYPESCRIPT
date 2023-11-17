@@ -8,12 +8,12 @@ import { Container } from '../../components/container/Container';
 import AppTextInput from '../../components/input/AppInput';
 import AppInputMask from '../../components/input/AppInputMask';
 import { validationFields } from '../../functions/validationFields';
-import { getUser, updateUser } from '../../services/dbActions';
+import { getUser, updateUser } from '../../services/api/userAPI';
 import * as S from './styles';
 
 
 const UpdateUser = () => {
-  const [userId, setUserId] = useState('');
+  const [userCpf, setuserCpf] = useState('');
   const [userName, setUserName] = useState('');
   const [userDate, setUserDate] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -26,16 +26,25 @@ const UpdateUser = () => {
 
   const searchUser = async () => {
     try {
-      const user = await getUser(userId);
+      const user = await getUser(userCpf);
       updateAllStates(user.user_name, user.user_date, user.user_email);
     } catch (error: any) {
       alert(error.message);
     }
   };
+
+
   const attUser = async () => {
 
-    await validationFields(userId, userName, userDate, userEmail);
-    await updateUser(userId, userName, userDate, userEmail);
+    const data = {
+      user_cpf: userCpf,
+      user_name: userName,
+      user_date: userDate,
+      user_email: userEmail
+    }
+
+    await validationFields(userCpf, userName, userDate, userEmail);
+    await updateUser(data);
   };
 
   return (
@@ -46,9 +55,9 @@ const UpdateUser = () => {
           style={{ flex: 1, justifyContent: 'space-between' }}>
           <AppTitle text="Filtro de Usuário" />
           <AppInputMask
-            placeholder="Entre com o ID do Usuário"
+            placeholder="Entre com o CPF do Usuário"
             onChangeText={
-              (userId) => setUserId(userId)
+              (userCpf) => setuserCpf(userCpf)
             }
             type="only-numbers"
             keyboardType="numeric"

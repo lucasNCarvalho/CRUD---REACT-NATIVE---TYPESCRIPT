@@ -5,23 +5,25 @@ import { UserProps } from '../../@types/UserProps';
 import { Container } from '../../components/container/Container';
 import * as S from './styles';
 import UserCard from '../../components/userCard/UserCard';
-import { getAllUser } from '../../services/dbActions';
+import { getAllUser } from '../../services/api/userAPI';
 
 
 const ViewAllUser = () => {
   const [flatListItems, setFlatListItems] = useState<UserProps[]>();
   const [message, setMessage] = useState('');
 
-  const getUsers = async () => {
-    try {
-      const user = await getAllUser();
-      setFlatListItems(user);
-    } catch (error: any) {
-      setMessage(error.message);
-    }
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const user = await getAllUser();
+        setFlatListItems(user);
+      } catch (error: any) {
+        setMessage(error.message);
+      }
+    };
 
-  }
-  getUsers();
+    getUsers();
+  }, []);
 
   return (
     <Container>

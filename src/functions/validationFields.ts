@@ -4,7 +4,7 @@ import validacaoAdapter from "./validacaoAdapter";
 
 
 export const validationFields = (
-    user_id: string,
+    user_cpf: string,
     user_name: string,
     user_date: string,
     user_email: string
@@ -12,7 +12,7 @@ export const validationFields = (
     const validType = new validacaoAdapter();
     return new Promise((resolve) => {
 
-        if (!user_id) {
+        if (!user_cpf) {
             alert("Por favor preencha o ID !");
             return;
         }

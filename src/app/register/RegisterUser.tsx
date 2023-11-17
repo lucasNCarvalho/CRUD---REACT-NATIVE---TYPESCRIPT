@@ -7,16 +7,14 @@ import { Container } from '../../components/container/Container';
 import AppTextInput from '../../components/input/AppInput';
 import AppInputMask from '../../components/input/AppInputMask';
 import { validationFields } from '../../functions/validationFields';
-import { registerUser } from '../../services/dbActions';
 import * as S from "./styles";
-import axios from 'axios';
-
+import {registerUser, getAllUser  }from '../../services/api/userAPI';
 
 
 
 const RegisterUser = () => {
 
-  const [userId, setUserId] = useState('');
+  const [userCpf, setuserCpf] = useState('');
   const [userName, setUserName] = useState('');
   const [userDate, setUserDate] = useState('');
   const [userEmail, setUserEmail] = useState('');
@@ -25,15 +23,17 @@ const RegisterUser = () => {
 
   const register_user = async () => {
     
-    await validationFields(userId, userName, userDate, userEmail);
+    await validationFields(userCpf, userName, userDate, userEmail);
+
     const data = {
-      id: userId,
-      name: userName,
-      date: userDate,
-      email: userEmail
+      user_cpf: userCpf,
+      user_name: userName,
+      user_date: userDate,
+      user_email: userEmail
     }
+
     console.log("oi")
-    axios.post("https://apirestful.onrender.com/person", data);
+    registerUser(data); 
   };
 
   return (
@@ -43,12 +43,12 @@ const RegisterUser = () => {
           behavior="padding"
         >
           <AppInputMask
-            placeholder="Entre com o ID"
+            placeholder="Entre com o CPF"
             onChangeText={
-              (userId: string) => setUserId(userId)
+              (userCpf: string) => setuserCpf(userCpf)
             }
             keyboardType="numeric"
-            maxLength={10}
+            maxLength={11}
             type="only-numbers"
           />
           <AppTextInput
